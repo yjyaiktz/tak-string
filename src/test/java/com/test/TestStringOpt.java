@@ -16,14 +16,13 @@ public class TestStringOpt {
         s1.setDictionary(new String[]{ "i", "like", "sam", "sung", "samsung", "mobile", "ice", "cream","man go"});
         s1.takeWord(new OptBase("ilikesamsung"));
 
-        //Stage 3
+        //Stage 2
         OnlyCustDicStringOpt s2=OnlyCustDicStringOpt.getInstance();
         s2.setDictionary(new String[]{ "i", "like", "sam", "sung", "samsung", "mobile", "ice", "cream","man go"});
         s2.takeWord(new OptOnlyCustDic("ilikeicecreamandmango",new String[]{"i", "like", "sam", "sung", "mobile", "icecream", "man go", "mango"}));
 
-
-        CustDicStringOpt s3=CustDicStringOpt.getInstance();
         //Stage 3
+        CustDicStringOpt s3=CustDicStringOpt.getInstance();
         s3.setDictionary(new String[]{ "i", "like", "sam", "sung", "samsung", "mobile", "ice", "cream","man go"});
         s3.takeWord(new OptCustDic("ilikeicecreamandmangoOK",new String[]{"OK"}));
 
