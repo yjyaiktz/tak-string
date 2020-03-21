@@ -1,6 +1,7 @@
-package com.test;
+package com.tak.wordbreak;
 
-import sun.security.jca.GetInstance;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @description
@@ -11,15 +12,17 @@ public class DefaultStringOpt extends AbstractStringOpt{
 
     private static DefaultStringOpt defaultStringOpt = new DefaultStringOpt();
 
-    private DefaultStringOpt(){}
+    private DefaultStringOpt(){
+        super();
+    }
 
     public static DefaultStringOpt  getInstance(){
         return defaultStringOpt;
     }
 
     @Override
-    public void takeWord(OptBase optBase){
-        wordBreak(optBase.getWord(),super.getDictionary());
+    public List<String> wordBreak(OptBase optBase){
+        return wordBreak(optBase.getWord(),new ArrayList<>(),super.getDictionary());
     }
 
 }

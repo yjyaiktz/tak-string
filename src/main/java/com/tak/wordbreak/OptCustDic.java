@@ -1,4 +1,6 @@
-package com.test;
+package com.tak.wordbreak;
+
+import java.util.Set;
 
 /**
  * @description
@@ -7,20 +9,20 @@ package com.test;
  */
 public class OptCustDic extends OptBase {
 
-    private String[] custDic;
+    private Set<String> custDic;
 
     public OptCustDic(){}
 
-    public OptCustDic(String word, String[] custDic){
+    public OptCustDic(String word, Set<String> custDic){
         super(word);
         this.custDic = custDic;
     }
 
-    public String[] getCustDic() {
+    public Set<String> getCustDic() {
         return custDic;
     }
 
-    public void setCustDic(String[] custDic) {
+    public void setCustDic(Set<String> custDic) {
         this.custDic = custDic;
     }
 }

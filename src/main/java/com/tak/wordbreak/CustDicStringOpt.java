@@ -1,7 +1,5 @@
-package com.test;
+package com.tak.wordbreak;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -13,16 +11,16 @@ public class CustDicStringOpt extends AbstractStringOpt{
 
     private static CustDicStringOpt custDicStringOpt = new CustDicStringOpt();
 
+    private CustDicStringOpt(){super();}
+
     public static CustDicStringOpt getInstance(){
         return custDicStringOpt;
     }
 
-    public void takeWord(OptBase optBase){
+    @Override
+    public List<String> wordBreak(OptBase optBase){
         OptCustDic optCustDic = (OptCustDic) optBase;
-        List<String> list = new ArrayList<String>(Arrays.asList(getDictionary()));
-        list.addAll(Arrays.asList(optCustDic.getCustDic()));
-        String[] newDictionary=list.toArray(new String[list.size()]);
-        wordBreak(optCustDic.getWord(),newDictionary);
+        return wordBreak(optCustDic.getWord(),optCustDic.getCustDic());
     }
 
 }
