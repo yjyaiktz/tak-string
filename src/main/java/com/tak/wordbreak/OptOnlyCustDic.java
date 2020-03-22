@@ -9,21 +9,8 @@ import java.util.Set;
  */
 public class OptOnlyCustDic extends OptBase{
 
-    private Set<String> custDic;
-
-    public OptOnlyCustDic(){}
-
     public OptOnlyCustDic(String word, Set<String> custDic){
-        super(word);
-        this.custDic = custDic;
-    }
-
-    public Set<String> getCustDic() {
-        return custDic;
-    }
-
-    public void setCustDic(Set<String> custDic) {
-        this.custDic = custDic;
+        super(word,custDic,false);
     }
 
 }

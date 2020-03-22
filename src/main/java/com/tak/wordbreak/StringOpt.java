@@ -1,14 +1,9 @@
 package com.tak.wordbreak;
 
 import java.util.List;
-import java.util.Set;
 
-public interface StringOpt {
+public interface StringOpt<T extends OptBase>{
 
-    List<String> wordBreak(String s, List<String> al, Set<String> userDictionary);
-
-    List<String> wordBreak(OptBase optBase);
-
-    List<String> wordBreak(String word,Set<String> theDictionary);
+    List<String> wordBreak(T t);
 
 }

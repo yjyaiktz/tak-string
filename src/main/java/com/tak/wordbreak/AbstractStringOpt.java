@@ -7,7 +7,7 @@ import java.util.*;
  * @Author 易建洋
  * @Date 2020/3/18 0:46
  */
-public abstract class AbstractStringOpt implements StringOpt {
+public abstract class AbstractStringOpt<T extends OptBase> implements StringOpt<T> {
 
     /**
      * set of dictionary
@@ -30,45 +30,49 @@ public abstract class AbstractStringOpt implements StringOpt {
     }
 
     @Override
-    public List<String> wordBreak(String word,Set<String> theDictionary){
-        for (String word1 : theDictionary ){
-            String[] dicWords=word1.split(" ");
-            for (int j = 0; j < dicWords.length; j++) {
-                dictionary.add(dicWords[j]);
-                maxLen = Math.max(maxLen, dicWords[j].length());
-            }
+    public List<String> wordBreak(T optBase){
+        Set<String> tempDictionary = new HashSet<>();
+        tempDictionary.add("and");
+        int maxCustLen = optBase.getMaxLen();
+        if(Objects.nonNull(optBase.getCustDic()) && optBase.getCustDic().size() > 0){
+            optBase.getCustDic().stream().forEach(s -> {
+                String[] words = s.split(" ");
+                tempDictionary.addAll(Arrays.asList(words));
+            });
         }
-        return wordBreak(word, new ArrayList<>(),dictionary);
+        if(optBase.isAppendCustDic()) {
+            tempDictionary.addAll(dictionary);
+            maxCustLen = Math.max(maxLen, maxCustLen);
+        }
+        return wordBreak(optBase.getWord(),maxCustLen, new ArrayList<>(), tempDictionary);
     }
 
     /**
      * get the set of all possible ways to break the sentence in individual dictionary words
      */
-    @Override
-    public List<String> wordBreak(String sentence, List<String> al, Set<String> userDictionary){
+    public List<String> wordBreak(String sentence, int maxLen,List<String> words, Set<String> userDictionary){
         List<String> result = new ArrayList<>();
         // shorten traversal
         int len = Math.min(sentence.length(),maxLen);
         /**
          * out trace of recursive condition
-         * save the valid sentence
-         * return;
+         * save the valid sentence and return;
          */
         if(sentence.length() == 0){
-            result.add(String.join(" ", al));
+            result.add(String.join(" ", words));
             return result;
         }
         int i=0;
         while(++i<=len){
             String substr = sentence.substring(0, i);
             if(userDictionary.contains(substr)){
-                al.add(substr);
+                words.add(substr);
                 // recursive
-                List<String> r2 = wordBreak(sentence.substring(i), al,userDictionary);
+                List<String> r2 = wordBreak(sentence.substring(i), len, words,userDictionary);
                 if(r2.size() > 0) {
                     result.addAll(r2);
                 }
-                al.remove(al.size()-1);
+                words.remove(words.size()-1);
             }
         }
         return result;
@@ -78,7 +82,7 @@ public abstract class AbstractStringOpt implements StringOpt {
         return dictionary;
     }
 
-    public void setDictionary(Set<String>dictionary) {
+    public void setDictionary(Set<String> dictionary) {
         this.dictionary = dictionary;
     }
 

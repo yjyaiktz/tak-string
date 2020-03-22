@@ -20,7 +20,7 @@ public class TestStringOpt {
      */
     @Test
     public void testStage1(){
-        StringOpt s1 = DefaultStringOpt.getInstance();
+        DefaultStringOpt<OptBase> s1 = DefaultStringOpt.getInstance();
         List<String> sentences = s1.wordBreak(new OptBase("ilikesamsungmobile"));
         Assert.assertEquals(2, sentences.size());
         Assert.assertEquals("i like sam sung mobile", sentences.get(0));
@@ -47,8 +47,8 @@ public class TestStringOpt {
      */
     @Test
     public void testStage2(){
-        StringOpt s2 = OnlyCustDicStringOpt.getInstance();
-        OptBase optBase = new OptOnlyCustDic("ilikeicecreamandmango",
+        OnlyCustDicStringOpt<OptOnlyCustDic> s2 = OnlyCustDicStringOpt.getInstance();
+        OptOnlyCustDic optBase = new OptOnlyCustDic("ilikeicecreamandmango",
                 arrayToSet(new String[]{"i", "like", "sam", "sung", "mobile", "icecream", "man go", "mango"}));
         List<String> sentences = s2.wordBreak(optBase);
         Assert.assertEquals(2, sentences.size());
@@ -69,8 +69,8 @@ public class TestStringOpt {
     @Test
     public void testStage3(){
 
-        StringOpt s3 = CustDicStringOpt.getInstance();
-        OptBase optBase = new OptCustDic("ilikeicecreamandmango",
+        IncludeCustDicStringOpt<OptIcludeCustDic> s3 = IncludeCustDicStringOpt.getInstance();
+        OptIcludeCustDic optBase = new OptIcludeCustDic("ilikeicecreamandmango",
                 arrayToSet(new String[]{"i", "like", "sam", "sung", "mobile", "icecream", "man go", "mango"}));
         List<String> sentences = s3.wordBreak(optBase);
         Assert.assertEquals(4, sentences.size());
@@ -88,9 +88,7 @@ public class TestStringOpt {
 
     public static Set<String> arrayToSet(String[] arrays){
         Set<String> dics = new HashSet<>();
-        for(String word : arrays){
-            dics.add(word);
-        }
+        Arrays.asList(arrays).stream().forEach(s -> dics.add(s));
         return dics;
     }
 
