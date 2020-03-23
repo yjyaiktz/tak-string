@@ -7,7 +7,9 @@ import java.util.*;
  * @Author 易建洋
  * @Date 2020/3/18 0:46
  */
-public abstract class AbstractStringOpt<T extends OptBase> implements StringOpt<T> {
+public class StringOptImpl<T extends OptBase> implements StringOpt<T> {
+
+    public static StringOptImpl<OptBase> singleton = new StringOptImpl<>();
 
     /**
      * set of dictionary
@@ -19,7 +21,11 @@ public abstract class AbstractStringOpt<T extends OptBase> implements StringOpt<
      */
     private int maxLen;
 
-    public AbstractStringOpt(){
+    public static StringOptImpl<OptBase> getInstance(){
+        return singleton;
+    }
+
+    private StringOptImpl(){
         maxLen = 0;
         dictionary = new HashSet<>();
         List<String> list = Arrays.asList(new String[]{"i", "or" , "and" ,"like", "sam", "sung", "samsung", "mobile", "ice", "cream","man", "go"});
@@ -31,20 +37,7 @@ public abstract class AbstractStringOpt<T extends OptBase> implements StringOpt<
 
     @Override
     public List<String> wordBreak(T optBase){
-        Set<String> tempDictionary = new HashSet<>();
-        tempDictionary.add("and");
-        int maxCustLen = optBase.getMaxLen();
-        if(Objects.nonNull(optBase.getCustDic()) && optBase.getCustDic().size() > 0){
-            optBase.getCustDic().stream().forEach(s -> {
-                String[] words = s.split(" ");
-                tempDictionary.addAll(Arrays.asList(words));
-            });
-        }
-        if(optBase.isAppendCustDic()) {
-            tempDictionary.addAll(dictionary);
-            maxCustLen = Math.max(maxLen, maxCustLen);
-        }
-        return wordBreak(optBase.getWord(),maxCustLen, new ArrayList<>(), tempDictionary);
+        return this.wordBreak(optBase.getWord(),optBase.getMaxLenWordOfDics(this), new ArrayList<>(), optBase.getDictionarys(this));
     }
 
     /**
